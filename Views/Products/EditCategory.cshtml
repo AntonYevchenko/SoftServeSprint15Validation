@@ -1,0 +1,78 @@
+﻿@model List<ProductsValidation.Models.Product>
+@using System.Collections.Generic;
+
+ <div>
+    @using (Html.BeginForm("EditCategory", "Products", FormMethod.Get)) 
+    {
+        <h1>Select Category</h1>
+        <br>
+        @Html.DropDownList("category", Html.GetEnumSelectList(typeof(Product.Category)), new { @class = "form-control" });
+        <br>
+        <input type="submit" value="Select" class="btn btn-primary" />
+    }
+</div> 
+<br>
+<h2>Edit Category prices</h2>
+<form asp-action="EditCategory" asp-controller="Products" method="post">
+    <table class="table form-group">
+        <thead>
+            <tr>
+                <th>
+                    <label asp-for="@Model[0].Id" class="control-label"></label>
+                </th>
+                <th style="display:none">
+                    <label asp-for="@Model[0].Type" class="control-label"></label>
+                </th>
+                <th>
+                    <label asp-for="@Model[0].Name" class="control-label"></label>
+                </th>
+                <th style="display:none">
+                    <label asp-for="@Model[0].Description" class="control-label"></label>
+                </th>
+                <th>
+                    <label asp-for="@Model[0].Price" class="control-label"></label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="@Model[i].Id" type="number" readonly class="form-control" />
+                        <br />
+                        <span asp-validation-for="@Model[i].Id" class="text-danger"></span>
+                    </td>
+                    <td style="display:none">
+                        <input asp-for="@Model[i].Type" readonly class="form-control" />
+                        <br />
+                        <span asp-validation-for="@Model[i].Type" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].Name" readonly class="form-control" />
+                        <br />
+                        <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
+                    </td>
+                    <td style="display:none">
+                        <input asp-for="@Model[i].Description" readonly class="form-control" />
+                        <br />
+                        <span asp-validation-for="@Model[i].Description" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].Price" type="number" class="form-control" />
+                        <br />
+                        <span asp-validation-for="@Model[i].Price" class="text-danger"></span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <input type="submit" value="Save" class="btn btn-primary" />
+</form>
+<br />
+
+<div>
+    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Products")'">Back to List</button>
+</div>
+
